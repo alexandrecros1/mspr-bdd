@@ -8,31 +8,37 @@ import java.util.ArrayList;
 import java.util.List;
 import mspr.mapping.DemandeMapper;
 import mspr.model.Demande;
-import mspr.model.Entreprise;
 
 public class DemandeDao extends GenericDao {
 
     private final DemandeMapper mapper;
+    private final TypeDechetDao typeDechetDao;
+    private final EntrepriseDao entrepriseDao;
 
     public DemandeDao(Connection connection) {
         super(connection);
         mapper = new DemandeMapper();
+        typeDechetDao = new TypeDechetDao(connection);
+        entrepriseDao = new EntrepriseDao(connection);
     }
 
     private Demande mapDemande(ResultSet rs) throws SQLException {
         Demande demande = mapper.process(rs);
+
+        /*List<TypeDechet> typeDechets = typeDechetDao.findByDemandeNo(demande.getNoDemande());
+        demande.setTypeDechets(typeDechets);*/
         return demande;
     }
 
     /**
      * @param noDemande
-     * @return The matching entreprise, otherwise null.
+     * @return the matching demande
      * @throws SQLException
      */
     public Demande findByIdParis(int noDemande) throws SQLException {
 
         Demande demande = null;
-        String sql = "SELECT e.siret, t.notournee, dd.quantiteenlevee"
+        String sql = "SELECT *"
                 + " FROM c##rparis.demande d"
                 + " JOIN c##rparis.entreprise e ON e.siret = d.siret"
                 + " JOIN c##rparis.tournee t ON t.notournee = d.notournee"
@@ -41,7 +47,6 @@ public class DemandeDao extends GenericDao {
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, noDemande);
         ResultSet rs = statement.executeQuery();
-
         if (rs.next()) {
             demande = mapDemande(rs);
         }

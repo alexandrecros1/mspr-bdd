@@ -10,7 +10,7 @@ public class EntrepriseMapper {
         
         Entreprise entreprise = new Entreprise();
 		
-            long siret = rs.getLong(1);
+            String siret = rs.getString(1);
             entreprise.setSiret(siret);
 
             String raisonSociale = rs.getString(2);

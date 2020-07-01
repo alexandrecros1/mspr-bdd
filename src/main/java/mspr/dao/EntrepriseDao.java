@@ -78,16 +78,16 @@ public class EntrepriseDao extends GenericDao {
     }
 
     /**
-     * @param raisonSociale
+     * @param siret
      * @return The matching entreprise, otherwise null.
      * @throws SQLException
      */
-    public Entreprise findByRaisonSociale(String raisonSociale) throws SQLException {
+    public Entreprise findBySiret(String siret) throws SQLException {
         Entreprise entreprise = null;
 
-        String sql = "SELECT * FROM entreprise WHERE raisonSociale = ?";
+        String sql = "SELECT * FROM entreprise WHERE siret = " + siret;
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(2, raisonSociale);
+        statement.setString(1, siret);
         ResultSet rs = statement.executeQuery();
 
         if (rs.next()) {

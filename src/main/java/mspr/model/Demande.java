@@ -1,6 +1,7 @@
 package mspr.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Demande {
 
@@ -9,7 +10,8 @@ public class Demande {
     private Date dateEnlevement;
     private String web_O_N;
     private Entreprise siret;
-    private Tournee noTournee;    
+    private Tournee noTournee;
+    private List<TypeDechet> typeDechets;
 
     public int getNoDemande() {
         return noDemande;
@@ -59,8 +61,24 @@ public class Demande {
         this.noTournee = noTournee;
     }
 
+    public List<TypeDechet> getTypeDechets() {
+        return typeDechets;
+    }
+
+    public void setTypeDechets(List<TypeDechet> typeDechets) {
+        this.typeDechets = typeDechets;
+    }
+
     @Override
     public String toString() {
-        return "Demande{" + "noDemande=" + noDemande + ", dateDemande=" + dateDemande + ", dateEnlevement=" + dateEnlevement + ", web_O_N=" + web_O_N + ", siret=" + siret + ", noTournee=" + noTournee + '}';
+        return "Demande{" + "noDemande=" + noDemande + ", dateDemande=" + dateDemande + ", dateEnlevement=" + dateEnlevement + ", web_O_N=" + web_O_N + ", siret=" + siret + ", noTournee=" + noTournee + ", typeDechets=" + typeDechets + '}';
+    }
+    
+    public String toStringDechets(){
+        
+        String str = "Demande : " + "Numéro de la demande=" + noDemande + ", Raison sociale=" + siret.getRaisonSociale() + ", Numéro de tournee=" + noTournee.getNoTournee() + "\n";
+        str += "Quantité pour chaque déchet : \n";
+        //str += this.typeDechets.stream().map((typeDechet) -> typeDechet.toString() + "\n").reduce(str, String::concat);
+        return str;
     }
 }

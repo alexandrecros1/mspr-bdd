@@ -2,7 +2,7 @@ package mspr.model;
 
 public class Entreprise {
 
-    private long siret;
+    private String siret;
     private String raisonSociale;
     private int noRueEntr;
     private String rueEntr;
@@ -11,11 +11,25 @@ public class Entreprise {
     private int noTel;
     private String contact;
 
-    public long getSiret() {
+    public Entreprise(String siret, String raisonSociale, int noRueEntr, String rueEntr, int cPostalEntr, String villeEntr, int noTel, String contact) {
+        this.siret = siret;
+        this.raisonSociale = raisonSociale;
+        this.noRueEntr = noRueEntr;
+        this.rueEntr = rueEntr;
+        this.cPostalEntr = cPostalEntr;
+        this.villeEntr = villeEntr;
+        this.noTel = noTel;
+        this.contact = contact;
+    }
+
+    public Entreprise() {
+    }
+    
+    public String getSiret() {
         return siret;
     }
 
-    public void setSiret(long siret) {
+    public void setSiret(String siret) {
         this.siret = siret;
     }
 

@@ -3,11 +3,14 @@ package mspr.mapping;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import mspr.dao.EntrepriseDao;
 import mspr.model.Demande;
 import mspr.model.Entreprise;
 import mspr.model.Tournee;
 
 public class DemandeMapper {
+
+    private EntrepriseDao entrepriseDao;
 
     public Demande process(ResultSet rs) throws SQLException {
 
@@ -25,15 +28,19 @@ public class DemandeMapper {
         String web_O_N = rs.getString(4);
         demande.setWeb_O_N(web_O_N);
 
-        long siret = rs.getLong(5);
-        Entreprise entreprise = new Entreprise();
-        entreprise.setSiret(siret);
-        demande.setSiret(entreprise);
+        String siret = rs.getString(5);
+        if (siret != null) {
+            Entreprise entreprise = new Entreprise();
+            entreprise.setSiret(siret);
+            demande.setSiret(entreprise);
+        }
 
         int noTournee = rs.getInt(6);
-        Tournee tournee = new Tournee();
-        tournee.setNoTournee(noTournee);
-        demande.setNoTournee(tournee);
+        if (noTournee != 0) {
+            Tournee tournee = new Tournee();
+            tournee.setNoTournee(noTournee);
+            demande.setNoTournee(tournee);
+        }
 
         return demande;
     }
